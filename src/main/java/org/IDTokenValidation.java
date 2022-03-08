@@ -54,7 +54,7 @@ public class IDTokenValidation {
         return decodedBytes;
     }
 
-    public static void main(String args[]) throws CertificateException, IOException {
+    public static void main(String args[]) throws CertificateException, IOException, NoSuchProviderException {
         Security.addProvider(new BouncyCastleFipsProvider());
         Security.addProvider(new BouncyCastleJsseProvider());
         dumpJwtInfo();
@@ -70,12 +70,11 @@ public class IDTokenValidation {
         dump(ID_TOKEN_PAYLOAD);
     }
 
-    public static void validateToken(boolean fips) throws CertificateException, IOException {
+    public static void validateToken(boolean fips) throws CertificateException, IOException, NoSuchProviderException {
         // TODO UNCOMMENT BELOW TO GENERATE PUBLIC KEY VIA x5c
-        // PublicKey publicKey =
-        // getPublicKeyFromCert("MIIClTCCAX0CBgF+4mvcLzANBgkqhkiG9w0BAQsFADAOMQwwCgYDVQQDDANJQU0wHhcNMjIwMjEwMDY1NTI2WhcNMzIwMjEwMDY1NzA2WjAOMQwwCgYDVQQDDANJQU0wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCJgyHbpTUhfsSEFPcY3bJck5wlZ+CUbS9fsncW/8fN18hZYOusHFeBBASUkRC/MmAMIvJGZRlxoZ+3Iyz97QNXv5fFEhcGMsCpUl9m7URFXyF//xcEmmS5nVLp6EMwjTjTjUBu3xq7vgThnhd8BLdTCFKj4uucqbuL3PO1B3PPPDRcwUuKnKsF67eg6fyPXtM5K2Kg8r5LAe1Lv8kneMteT4BZ0YBvzpPCMEfvi7bhdxVRm4slIcc+iBwFbieiVYDk8Y3MVGVRU6UCMfFFxnVU72xH+iAsyQOkmX4CpCiSYqjYdTi/k+aNslQtmOOG2ZU7cvNkyLe/XRE5c+8CZFgHAgMBAAEwDQYJKoZIhvcNAQELBQADggEBADE5gy0UlfFj+5SuttQh48352HW4JYMDxcVa1lJufBcumpeqNSx7zA4vlLJoL74yjvdvEmLAMF0fzOPYm1GGbv4IwEx8AI7zBxvoMF5DU17E+TmDgDRdI9wIBCQrFXGgfQiDED/3ZDYpleAgimOw9gEW6L0dptSBj+QGOdHzflhJJKN1PZZjjeY+5/Lh3kqVGnQZtTP0qWip/ay4s8I40QRWOTIvne7W/YE1rkm7mDfYI3DIqHGNwsxk01pa9lKWVt+nosfo8pxBzepkat3NfiKHAReScfvI2Mt4FLE/0Sqe/VAuFUAJdEkYFrRiPGiLSIL2C2D6VzRWnYdu1+WtLrk=");
+        PublicKey publicKey = getPublicKeyFromCert("MIIClTCCAX0CBgF+4mvcLzANBgkqhkiG9w0BAQsFADAOMQwwCgYDVQQDDANJQU0wHhcNMjIwMjEwMDY1NTI2WhcNMzIwMjEwMDY1NzA2WjAOMQwwCgYDVQQDDANJQU0wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCJgyHbpTUhfsSEFPcY3bJck5wlZ+CUbS9fsncW/8fN18hZYOusHFeBBASUkRC/MmAMIvJGZRlxoZ+3Iyz97QNXv5fFEhcGMsCpUl9m7URFXyF//xcEmmS5nVLp6EMwjTjTjUBu3xq7vgThnhd8BLdTCFKj4uucqbuL3PO1B3PPPDRcwUuKnKsF67eg6fyPXtM5K2Kg8r5LAe1Lv8kneMteT4BZ0YBvzpPCMEfvi7bhdxVRm4slIcc+iBwFbieiVYDk8Y3MVGVRU6UCMfFFxnVU72xH+iAsyQOkmX4CpCiSYqjYdTi/k+aNslQtmOOG2ZU7cvNkyLe/XRE5c+8CZFgHAgMBAAEwDQYJKoZIhvcNAQELBQADggEBADE5gy0UlfFj+5SuttQh48352HW4JYMDxcVa1lJufBcumpeqNSx7zA4vlLJoL74yjvdvEmLAMF0fzOPYm1GGbv4IwEx8AI7zBxvoMF5DU17E+TmDgDRdI9wIBCQrFXGgfQiDED/3ZDYpleAgimOw9gEW6L0dptSBj+QGOdHzflhJJKN1PZZjjeY+5/Lh3kqVGnQZtTP0qWip/ay4s8I40QRWOTIvne7W/YE1rkm7mDfYI3DIqHGNwsxk01pa9lKWVt+nosfo8pxBzepkat3NfiKHAReScfvI2Mt4FLE/0Sqe/VAuFUAJdEkYFrRiPGiLSIL2C2D6VzRWnYdu1+WtLrk=", fips);
         // TODO UNCOMMMENT TO GENERATE PUBLIC KEY VIA MODULUS/EXPONENT
-        PublicKey publicKey = getPublicKey(MODULUS, EXPONENT, fips);
+        //PublicKey publicKey = getPublicKey(MODULUS, EXPONENT, fips);
 
         byte[] data = (id_token_parts[0] + "." + id_token_parts[1]).getBytes(StandardCharsets.UTF_8);
 
